@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+     {{prod.desc|truncatewords:150}}
+     <p>welcome to BIG BAZAR store</p>
+{% endblock %}
+
+{% block title %}
+  {% if category %}
+    {{product.name}}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div>
+    <div>
+        <a href="{% url 'shop:allprodcat' %}">Home</a>|<a href="{{product.category.get_url}}">{{product.name}}</a>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+             <div style="min-width:18rem;">
+                  <img src="{{product.ima.url}}" alt="{{product.name}}" width="470px" height="400px" style="margin-top:30px;">
+             </div>
+        </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+        <h1 class="prod_title"style="font-family:verdana"><b>{{product.brand}}</b></h1>
+        <h4 class="prod_title" style="font-family:courier">{{product.name}}</h4>
+         <p>Price:{{product.price}} Rs</p>
+         <p><b>PRODUCT DETAILS</b></p>
+         <p class="text-justify prod_text">{{product.desc}}</p>
+         {% if product.stock <= 0 %}
+         <p class="text-justify prod_text" ><b>Out of Stock</b></p>
+         {% else %}
+        <br>
+        <a class="btn btn-primary" href="{% url 'cart:add_cart' product.id%}">Add to Cart</a>
+        {% endif %}
+    </div>
+        </div>
+</div>
+{% endblock %}
